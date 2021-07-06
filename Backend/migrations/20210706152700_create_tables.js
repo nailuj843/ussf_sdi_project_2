@@ -9,6 +9,7 @@ exports.up = function(knex, Promise) {
                 table.string('name').notNullable();
                 table.string('email').notNullable();
                 table.string('password').notNullable();
+                table.boolean('commander').notNullable();
         })
         }).then(() => {
             return knex.schema.createTable('launchschedule', table => {
@@ -16,9 +17,12 @@ exports.up = function(knex, Promise) {
                 table.integer('customer_id').notNullable().references('id').inTable('customers').onDelete('CASCADE');
                 table.string('vehicle').notNullable();
                 table.string('payload').notNullable();
-                table.string('date').notNullable();
+                table.string('launch_date').notNullable();
+                table.string('launch_time').notNullable();
                 table.integer('user_id').notNullable().references('id').inTable('users').onDelete('CASCADE');
-                table.boolean('commanderApproval').defaultTo('false');
+                table.string('request_date').defaultTo(new Date().toGMTString());
+                table.boolean('commander_approval').defaultTo('false');
+                table.string('scrub_reason').defaultTo('N/A');
             })
         })
 };
