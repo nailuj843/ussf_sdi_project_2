@@ -8,7 +8,7 @@ A brief description outlining what the project
 You can link to the different sections below
 
 ## Description
-![Schema](./SCHEMA.drawio.png)
+![Schema](./Description/SCHEMAV2.png)
 A more detailed outline of the project. What does it do? Is there a high level list of features? If describing a project that has visual features, consider adding pictures or animations of the features and functionality in this section. See Adding Screen Captures below.
 
 ## Installation
