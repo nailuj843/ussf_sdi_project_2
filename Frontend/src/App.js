@@ -1,29 +1,29 @@
 import './App.css';
 import React, { useState } from 'react';
-// import Calendar from 'react-calendar';
-import 'react-calendar/dist/Calendar.css';
-import { DateTimePicker } from '@material-ui/pickers';
-import { MuiPickersUtilsProvider } from '@material-ui/pickers';
-// import MomentUtils from '@date-io/moment';
-import DateFnsUtils from '@date-io/date-fns';
-// import LuxonUtils from '@date-io/luxon';
+// import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
+import Home from './components/Home'
+import AppContext from './contexts/AppContext';
+import moment from 'moment'
+
+let launchMoment = require('moment')
+require('moment-timezone')
+moment.tz.setDefault('America/Los_Angeles')
+
 
 function App() {
-  const [value, onChange] = useState(new Date());
+  const [launchData, setLaunchData] = useState([])
+  const [customerData, setCustomerData] = useState([])
+  const [userData, setUserData] = useState([])
+
 
   return (
     <div className='main'>
-      Hello World!
-      {/* <Calendar
-        onChange={onChange}
-        value={value}
-      /> */}
-    
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <DateTimePicker onChange={onChange} value={value}> </DateTimePicker>
-    </MuiPickersUtilsProvider>
+      <AppContext.Provider value={{ launchData, setLaunchData, customerData, setCustomerData, userData, setUserData }}>
+        <h1> Launch Scheduler 9000 </h1>
 
-      {/* <DateTimePicker onChange={onChange} value={value}> </DateTimePicker> */}
+
+        <Home />
+      </AppContext.Provider>
     </div>
   );
 }

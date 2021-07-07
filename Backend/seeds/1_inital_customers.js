@@ -1,13 +1,13 @@
 
-exports.seed = function(knex) {
+exports.seed = function (knex) {
   // Deletes ALL existing entries
   return knex('customers').del()
     .then(function () {
       // Inserts seed entries
       return knex('customers').insert([
-        {customer: 'SpaceX'},
-        {customer: 'United Launch Alliance (ULA)'},
-        {customer: 'NASA'}
+        { name: 'SpaceX' },
+        { name: 'United Launch Alliance (ULA)' },
+        { name: 'NASA' }
       ]);
     });
 };
