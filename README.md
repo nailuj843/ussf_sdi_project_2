@@ -1,12 +1,12 @@
 # Launch Scheduler 9000
 
 ## Table of Contents
- I. [Overview](#Overview)
- II. [Description](#Description)
- III. [Installation](#Installation)
- IV. [Team Members](#Team-Members)
- V. [Roadmap](#Roadmap)
- VI. [License](#License)
+ 1. [Overview](#Overview)
+ 2. [Description](#Description)
+ 3. [Installation](#Installation)
+ 4. [Team Members](#Team-Members)
+ 5. [Roadmap](#Roadmap)
+ 6. [License](#License)
 
 ## Overview
 Launch Scheduler 9000 allows registered users to file, view, and approve scheduled launches on a minimalistic dashboard.
