@@ -15,7 +15,7 @@ Launch Scheduler 9000 allows registered users to file, view, and approve schedul
 ![Schema](./Description/SCHEMA.png)
 
 ## Installation
-  1. Please modify the .env.example file, following the format commented within the .env file. Delete the comments and the .example extension of the .env file before running the application.
+  1. Please modify the .env.example file, following the format commented within the .env.example file. Delete the comments and the .example extension of the .env file before running the application.
 
   2. To run the application, please start your PostgreSQL docker container and CREATE DATABASE as named in your .env file.
 
@@ -32,8 +32,8 @@ Launch Scheduler 9000 allows registered users to file, view, and approve schedul
   8. Go to the backend and execute ```npm start``` to start the Express server.
 
   9. Please use the dummy information below to login to the app for the first time, and then create your own user information:
-    - Email: justinthelaw@yahoo.com
-    - Password: galvanize
+     - Email: justinthelaw@yahoo.com
+     - Password: galvanize
 
   10. Now you can create launch schedules, register users, and register customers!
 
@@ -53,6 +53,7 @@ Future enhancements:
 - Add new permission levels for: new user registration, customer registration, delete users, etc.
 - Make launch vehicles a select list based on up-to-date launch vehicle lists from customers
 - Register users from the login page and add 'help' contact info
+- Log all edits to a launch in a new table and show on dashboard and/or separate window when launch schedule row is clicked
 - Current state of project is 'useable', however it is limited and has not been deployed
 - App is only being maintained for this week 7/9/2021, until viability can be confirmed
 
