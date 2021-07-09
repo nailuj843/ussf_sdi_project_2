@@ -18,7 +18,6 @@ exports.up = function (knex, Promise) {
             table.string('vehicle').notNullable();
             table.string('payload').notNullable();
             table.string('launch_date').notNullable();
-            table.string('launch_time').notNullable();
             table.integer('user_id').notNullable().references('id').inTable('users');
             table.string('request_date').defaultTo(new Date().toGMTString());
             table.boolean('commander_approval').defaultTo('false');

@@ -6,115 +6,43 @@ import { makeStyles } from '@material-ui/core/styles'
 import NewEntry from './NewEntry';
 import AppContext from '../contexts/AppContext';
 import Grid from '@material-ui/core/Grid';
+import AlertDialog from './AlertDialog';
+import '../App.css';
+
 
 function Dashboard() {
 
     const { launchData, setLaunchData } = useContext(AppContext)
     const { customerData, setCustomerData } = useContext(AppContext)
     const { userData, setUserData } = useContext(AppContext)
-
-    // const [launchData, setLaunchData] = useState([])
-    // const [customerData, setCustomerData] = useState([])
-    // const [userData, setUserData] = useState([])
+    const { open, setOpen } = useContext(AppContext)
+    const { openAlert, setOpenAlert } = useContext(AppContext)
+    const { loaded, setLoaded } = useContext(AppContext)
 
     const [columns, setColumns] = useState([])
     const [rows, setRows] = useState([])
-    const [loaded, setLoaded] = useState(false)
-    const [open, setOpen] = useState(false)
-    const [modalStyle] = React.useState(getModalStyle);
 
+    const [modalStyle] = useState(getModalStyle);
     const [currentId, setCurrentId] = useState(0);
 
     async function createTable() {
         let newColumns = [
             {
-                field: 'id',
-                headerName: 'ID',
-                flex: .3,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'customer',
-                headerName: 'Customer',
-                flex: .4,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'vehicle',
-                headerName: 'Vehicle',
-                flex: .4,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'payload',
-                headerName: 'Payload',
-                flex: .4,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'launch_date',
-                headerName: 'Launch Date',
-                flex: .5,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'user',
-                headerName: 'Requestor',
-                flex: .5,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'commander_approval',
-                headerName: 'CC Approval',
-                flex: .5,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'request_date',
-                headerName: 'Request Date',
-                flex: .5,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'approval_date',
-                headerName: 'Approval Date',
-                flex: .5,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'scrub_reason',
-                headerName: 'Scrub Reason',
-                flex: .5,
-                editable: false,
-                headerAlign: 'center'
-            },
-            {
-                field: 'actions',
+                field: 'pageActions',
                 headerName: 'Actions',
-                flex: .4,
+                width: 130,
                 editable: false,
                 headerAlign: 'center',
                 renderCell: (params) => {
                     return (
                         <strong>
                             <Button
-                                id={params.id}
                                 variant="contained"
                                 size="small"
                                 onClick={() => editButtonClick(params.id)}
                                 style={{ marginLeft: 5, maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px' }}>
                                 ✏️</Button>
                             <Button
-                                id={params.id}
                                 variant="contained"
                                 color="primary"
                                 size="small"
@@ -122,7 +50,6 @@ function Dashboard() {
                                 style={{ marginLeft: 5, maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px' }}>
                                 ✔️</Button>
                             <Button
-                                id={params.id}
                                 variant="contained"
                                 color="secondary"
                                 size="small"
@@ -131,10 +58,79 @@ function Dashboard() {
                                 🗑️</Button>
                         </strong >)
                 }
+            },
+            {
+                field: 'id',
+                headerName: 'ID',
+                width: 100,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'customer',
+                headerName: 'Customer',
+                width: 150,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'vehicle',
+                headerName: 'Vehicle',
+                width: 150,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'payload',
+                headerName: 'Payload',
+                width: 150,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'launch_date',
+                headerName: 'Launch Date',
+                width: 210,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'user',
+                headerName: 'Requestor',
+                width: 145,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'commander_approval',
+                headerName: 'CC Approval',
+                width: 157,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'request_date',
+                headerName: 'Request Date',
+                width: 200,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'approval_date',
+                headerName: 'Approval Date',
+                width: 200,
+                editable: false,
+                headerAlign: 'center'
+            },
+            {
+                field: 'scrub_reason',
+                headerName: 'Scrub Reason',
+                width: 200,
+                editable: false,
+                headerAlign: 'center'
             }
+
         ]
-
-
 
         await setColumns([...newColumns])
 
@@ -149,10 +145,10 @@ function Dashboard() {
                 customer: grabName(customerData, item.customer_id),
                 vehicle: item.vehicle,
                 payload: item.payload,
-                launch_date: `${item.launch_date} ${item.launch_time}`,
+                launch_date: item.launch_date,
                 user: grabName(userData, item.user_id),
                 commander_approval: item.commander_approval,
-                request_date: item.request_date,
+                request_date: item.request_date.replace('GMT', 'Z'),
                 approval_date: item.approval_date,
                 scrub_reason: item.scrub_reason,
                 actions: item.id
@@ -173,7 +169,7 @@ function Dashboard() {
     }
 
     const useStyles = makeStyles((theme) => ({
-        paper: {
+        root: {
             position: 'absolute',
             width: 400,
             backgroundColor: theme.palette.background.paper,
@@ -183,19 +179,16 @@ function Dashboard() {
         },
     }));
 
+
     const editButtonClick = async (id) => {
         await setCurrentId(id)
         handleOpen()
     }
 
-    const approveButtonClick = (id) => {
-        //TO DO: confirm box
-        //TO DO: fetch PATCH an entry
-    }
 
-    const deleteButtonClick = (id) => {
-        //TO DO: confirm box
-        //TO DO: fetch DELETE an entry
+    const deleteButtonClick = async (id) => {
+        await setCurrentId(id)
+        setOpenAlert(true)
     }
 
     const handleOpen = () => {
@@ -210,14 +203,20 @@ function Dashboard() {
 
     const classes = useStyles();
 
+
+    const approveButtonClick = async (id) => {
+        await setCurrentId(id)
+        handleOpen()
+    }
+
     let body = (
 
-        <div style={modalStyle} className={classes.paper}>
+        <div style={modalStyle} className={classes.root}>
             <h2 id="simple-modal-title">Edit Your Entry</h2>
             <p id="simple-modal-description">
-                <NewEntry edit={true} launchData={launchData.find(item => item.id === currentId)}></NewEntry>
+                <NewEntry edit={true} selectedLaunchData={launchData.find(item => item.id === currentId)}></NewEntry>
             </p>
-            <Grid container justifyContent="space-evenly">
+            <Grid container justifyContent="space-between">
 
                 <Button onClick={handleClose} variant="contained"
                     color="secondary"
@@ -256,15 +255,14 @@ function Dashboard() {
 
     return (
         <>
-            <div style={{ height: 500, width: 1700 }}>
+            <div style={{ height: '75vh', width: '98vw' }}>
                 <DataGrid
                     rows={rows}
+                    rowHeight={50}
                     columns={columns}
-                    pageSize={5}
-                    //checkboxSelection
-                    disableSelectionOnClick
+                    pageSize={10}
                     components={{
-                        Toolbar: GridToolbar,
+                        Toolbar: GridToolbar
                     }}
                 />
                 <Modal
@@ -275,6 +273,8 @@ function Dashboard() {
                     {body}
                 </Modal>
             </div>
+            <AlertDialog id={currentId} />
+            {/* {console.log(userData)} */}
         </>
     );
 }
