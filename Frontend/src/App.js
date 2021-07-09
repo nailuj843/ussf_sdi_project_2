@@ -19,6 +19,7 @@ function App() {
   const [loaded, setLoaded] = useState(false)
   const [currentUser, setCurrentUser] = useState(null)
 
+
   return (
     <div className='main'>
       <AppContext.Provider value={{
@@ -28,7 +29,8 @@ function App() {
         selectedDate, setSelectedDate,
         open, setOpen,
         openAlert, setOpenAlert,
-        loaded, setLoaded, currentUser, setCurrentUser
+        loaded, setLoaded,
+        currentUser, setCurrentUser
       }}>
         <Router>
           <h1> Launch Scheduler 9000 </h1>

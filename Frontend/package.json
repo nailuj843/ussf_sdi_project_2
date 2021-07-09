@@ -14,6 +14,7 @@
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^12.8.3",
     "date-fns": "^2.22.1",
+    "js-cookie": "^2.2.1",
     "material-table": "^1.69.3",
     "react": "^17.0.2",
     "react-datetime-picker": "^3.3.0",

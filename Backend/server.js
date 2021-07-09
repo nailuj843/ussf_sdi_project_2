@@ -3,14 +3,38 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3001;
 const knex = require('knex')(require('./knexfile.js')['development']);
+const cookieParser = require('cookie-parser')
 
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
 app.use(express.json());
 
+app.use(cookieParser())
+
+app.get('/cookies/clear', (req, res) => {
+    console.log('user tried to sign out')
+    res.clearCookie('cookieJar')
+    res.status(200).clearCookie('user').end(JSON.stringify('cookies cleared!'))
+})
+
 app.get('/', (req, res) => {
     console.log('the server was successfully hit')
-    res.send('you hit the server')
+
+    res.cookie('cookieJar', 'Cookie')
+    console.log('these are cookies: ', req.cookies)
+    res.end(JSON.stringify('you hit the server'))
+})
+
+app.post('/cookies/user', (req, res) => {
+    console.log('user tried to login email: ', req.body.id)
+    var opts = {
+        maxAge: 900000
+    };
+
+    res.cookie('user', req.body.id)
+
+    res.send('successfully set login')
+
 })
 
 app.get('/launchschedule', (req, res) => {
@@ -26,16 +50,6 @@ app.get('/launchschedule', (req, res) => {
 app.post('/launchschedule', async (req, res) => {
     console.log(req.body)
     console.log('user tried to enter a new launch')
-    // knex('launchschedule')
-    //     .insert({
-    //         customer_id: req.body.customer_id,
-    //         vehicle: req.body.vehicle,
-    //         payload: req.body.payload,
-    //         launch_date: req.body.launch_date,
-    //         user_id: req.body.user_id,
-    //     })
-    //     .then(data => res.status(200).json(data))
-    //     .catch(err => res.status(404).json({ message: 'Failed to add new launch' }))
     await knex.insert({
         customer_id: req.body.customer_id,
         vehicle: req.body.vehicle,
@@ -109,6 +123,7 @@ app.patch('/updateEntry', async (req, res) => {
         payload: req.body.payload,
         launch_date: req.body.launch_date,
         commander_approval: req.body.commander_approval,
+        approval_date: 'Not Approved',
         scrub_reason: req.body.scrub_reason
     }
 
@@ -121,7 +136,22 @@ app.patch('/updateEntry', async (req, res) => {
     // res.send('you tried to make a patch')
 })
 
+app.patch('/approve', async (req, res) => {
+    console.log(req.body)
+    console.log('user tried to approve a launch date')
 
+    let dataToSend = {
+        commander_approval: req.body.commander_approval,
+        approval_date: new Date().toGMTString().replace('GMT', 'Z')
+    }
+
+    await knex('launchschedule')
+        .where('id', req.body.id)
+        .update(dataToSend)
+        .then(data => res.status(200).json(data))
+        .catch(err => res.status(404).json({ message: 'Failed to approve launch' }))
+
+})
 
 app.listen(PORT, () => {
     console.log(`The server is running on ${PORT}`);

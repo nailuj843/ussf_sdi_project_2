@@ -3,19 +3,25 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom'
 import React, { useContext } from 'react';
 import AppContext from '../contexts/AppContext';
+import Cookies from 'js-cookie'
 
 export default function Home() {
 
     const { currentUser, setCurrentUser } = useContext(AppContext)
 
-    // if (currentUser === null) {
-    //     window.location.href = 'http://localhost:3000'
-    //     return
-    // }
+    if (!Cookies.get('user')) {
+        window.location.href = 'http://localhost:3000'
+        return
+    }
 
-    function handleClick(e) {
+    async function handleClick(e) {
         e.preventDefault();
         setCurrentUser(null)
+
+        await fetch('http://localhost:3001/cookies/clear', { credentials: 'include', method: 'get' })
+            .then(res => res.json())
+            .then(data => console.log(data))
+
         window.location.href = 'http://localhost:3000'
     }
 
@@ -23,7 +29,7 @@ export default function Home() {
         <>
             <Button variant="contained"
                 color="primary"
-                size="medium"
+                size="small"
                 onClick={handleClick}
                 style={{ marginLeft: 5, marginTop: 5, marginBottom: 20 }}>Sign Out</Button>
 

@@ -3,16 +3,17 @@ import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 import React, { useContext } from 'react';
 import AppContext from '../contexts/AppContext';
+import Cookies from 'js-cookie'
 
 export default function NewCustomer() {
 
 
     const { currentUser } = useContext(AppContext)
 
-    // if (currentUser === null) {
-    //     window.location.href = 'http://localhost:3000'
-    //     return
-    // }
+    if (!Cookies.get('user')) {
+        window.location.href = 'http://localhost:3000'
+        return
+    }
 
     async function handleSubmit(e) {
         e.preventDefault()

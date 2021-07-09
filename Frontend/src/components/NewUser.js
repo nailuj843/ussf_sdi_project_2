@@ -1,20 +1,18 @@
 import { TextField, Select, InputLabel, FormControl } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
-import { useHistory } from "react-router-dom";
 import { Redirect } from 'react-router';
 import React, { useContext } from 'react';
 import AppContext from '../contexts/AppContext';
+import Cookies from 'js-cookie'
 
 export default function NewUser() {
     const { currentUser } = useContext(AppContext)
 
-    // if (currentUser === null) {
-    //     window.location.href = 'http://localhost:3000'
-    //     return
-    // }
-
-    let history = useHistory();
+    if (!Cookies.get('user')) {
+        window.location.href = 'http://localhost:3000'
+        return
+    }
 
     async function handleRegister(e) {
         e.preventDefault();

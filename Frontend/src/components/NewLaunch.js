@@ -4,7 +4,7 @@ import AppContext from '../contexts/AppContext';
 import { TextField, Select } from '@material-ui/core';
 import NewEntry from './NewEntry'
 import Button from '@material-ui/core/Button';
-
+import Cookies from 'js-cookie'
 
 export default function NewLaunch() {
 
@@ -13,10 +13,10 @@ export default function NewLaunch() {
     const { userData, setUserData } = useContext(AppContext)
     const { currentUser } = useContext(AppContext)
 
-    // if (currentUser === null) {
-    //     window.location.href = 'http://localhost:3000'
-    //     return
-    // }
+    if (!Cookies.get('user')) {
+        window.location.href = 'http://localhost:3000'
+        return
+    }
 
     let userIDcatch = 1;
 

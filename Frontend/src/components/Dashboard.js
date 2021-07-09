@@ -8,7 +8,7 @@ import AppContext from '../contexts/AppContext';
 import Grid from '@material-ui/core/Grid';
 import AlertDialog from './AlertDialog';
 import '../App.css';
-
+import Cookies from 'js-cookie'
 
 function Dashboard() {
 
@@ -16,7 +16,7 @@ function Dashboard() {
     const { customerData, setCustomerData } = useContext(AppContext)
     const { userData, setUserData } = useContext(AppContext)
     const { open, setOpen } = useContext(AppContext)
-    const { openAlert, setOpenAlert } = useContext(AppContext)
+    const { setOpenAlert } = useContext(AppContext)
     const { loaded, setLoaded } = useContext(AppContext)
 
     const [columns, setColumns] = useState([])
@@ -69,7 +69,7 @@ function Dashboard() {
             {
                 field: 'customer',
                 headerName: 'Customer',
-                width: 150,
+                width: 210,
                 editable: false,
                 headerAlign: 'center'
             },
@@ -199,14 +199,32 @@ function Dashboard() {
         setOpen(false)
     }
 
-
-
     const classes = useStyles();
 
+    const approveLaunch = (dataToPatch) => {
+        fetch('http://localhost:3001/approve', {
+            credentials: 'include',
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'charset': 'UTF-8'
+            },
+            body: JSON.stringify(dataToPatch)
+
+        })
+            .then(res => res.json())
+    }
 
     const approveButtonClick = async (id) => {
-        await setCurrentId(id)
-        handleOpen()
+        let userId = parseInt(Cookies.get('user'))
+        let target = userData.find(user => user.id === userId)
+        if (target.commander) {
+            await approveLaunch({ id: id, commander_approval: "true" })
+            window.location.href = 'http://localhost:3000/home'
+        } else {
+            alert('You are not a commander!')
+        }
+
     }
 
     let body = (

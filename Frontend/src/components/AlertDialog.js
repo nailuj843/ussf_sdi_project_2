@@ -22,7 +22,7 @@ export default function AlertDialog({ id }) {
         console.log(`trying to delete`, id)
         deleteDataFromServer()
         setOpenAlert(false);
-        window.location.href = 'http://localhost:3000'
+        window.location.href = 'http://localhost:3000/home'
     }
 
     const deleteDataFromServer = () => {

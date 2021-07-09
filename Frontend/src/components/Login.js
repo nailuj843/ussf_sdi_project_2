@@ -8,10 +8,16 @@ export default function Login() {
     const { userData, setUserData } = useContext(AppContext)
 
     useEffect(() => {
+
+        fetch('http://localhost:3001/', { credentials: 'include', method: 'get' })
+            .then(res => res.json())
+
+
         fetch('http://localhost:3001/users')
             .then(res => res.json())
             .then(data => setUserData(data))
-        // eslint-disable-next-line
+
+
     }, [])
 
     function handleLogin(e) {
@@ -29,18 +35,26 @@ export default function Login() {
 
         if (target) {
             setCurrentUser(target)
+            fetch('http://localhost:3001/cookies/user',
+                {
+                    credentials: 'include',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ 'id': target.id })
+                })
+                .then(window.location.href = 'http://localhost:3000/home')
         } else {
             alert('Incorrect password or email!')
             return
         }
-
-        window.location.href = 'http://localhost:3000/home'
-
     }
 
     return (
         <>
             <form>
+
                 <TextField required variant="outlined" label="Email" id="email" native margin="normal" type='email'></TextField>
                 <br />
                 <TextField required variant="outlined" label="Password" id="password" native margin="normal" type='password' ></TextField>

@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import AppContext from '../contexts/AppContext';
 import Picker from './DateTimePicker';
 import { TextField, Select, InputLabel, FormControl } from '@material-ui/core';
+import Cookies from 'js-cookie'
 
 export default function NewEntry({ selectedLaunchData, edit }) {
     const { launchData } = useContext(AppContext)
@@ -31,20 +32,9 @@ export default function NewEntry({ selectedLaunchData, edit }) {
 
         let timeDiff = 0
         let dateDiff = launchData.filter(entry => {
-
-            // let both dates be converted to a format where their time zones are the same
-            // no extra math required if they are both converted in the same way
-
             let entryDate = new Date(entry.launch_date)
             let convertedSelectedDate = new Date(date)
-
-            // console.log(entry.id, 'date from entry ', entryDate)
-            // console.log('date from selection', convertedSelectedDate)
-            // console.log('date difference in millis ', entryDate - convertedSelectedDate)
-
-            // 12 hours in milliseconds, is 43200000
             timeDiff = Math.abs(entryDate - convertedSelectedDate)
-
             return timeDiff < 43200000 && timeDiff > 0
         })
 
@@ -55,18 +45,18 @@ export default function NewEntry({ selectedLaunchData, edit }) {
 
         if (dateDiff.length > 0) {
             alert(
-                `Selected Date Conflicts with another Launch \nNo launches allowed within 12 hours 
-                   Customer: ${customerData.filter(c => c.id === dateDiff[0].customer_id)[0].name} 
+                `Selected Date Conflicts with another Launch \nNo launches allowed within 12 hours
+                   Customer: ${customerData.filter(c => c.id === dateDiff[0].customer_id)[0].name}
                    Payload: ${dateDiff[0].payload}
                    Launch Date: ${dateDiff[0].launch_date} \n
-                   Time Between Launches: 
+                   Time Between Launches:
                    ${new Date(timeDiff).toISOString().slice(11, 19)}
                    `)
             return
         }
 
         //TODO get login ID
-        let user_ID = 2;
+        let user_ID = Cookies.get('user');
 
         let dataToSend = {
             'id': ID,
@@ -75,6 +65,7 @@ export default function NewEntry({ selectedLaunchData, edit }) {
             'payload': payload,
             'launch_date': date,
             'commander_approval': false,
+            'approval_date': 'Not Approved',
             'scrub_reason': scrubReason,
             'user_id': user_ID
         }
