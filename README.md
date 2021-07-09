@@ -29,11 +29,11 @@ enjoy the app
 ## Team Members
 
  - Bryan Leyva: Project Commander; the fate of the project rests on his shoulders
-    - ![Bryan's Github](https://github.com/bleyva21)
+    - [Bryan's Github](https://github.com/bleyva21)
  - Justin Law: Lead software developer; decideds all critical implementations
-    - ![Justin's GitHub](https://github.com/justinthelaw)
+    - [Justin's GitHub](https://github.com/justinthelaw)
  - Julian Heinze: Founder; came up with the name of the app
-    - ![Julian's GitHub](https://github.com/nailuj843)
+    - [Julian's GitHub](https://github.com/nailuj843)
 
 ## Roadmap
 Future enhancements:
