@@ -31,7 +31,7 @@ Launch Scheduler 9000 allows registered users to file, view, and approve schedul
 
   8. Go to the backend and execute ```npm start``` to start the Express server.
 
-  9. Please use the following dummy information to login for the first time:
+  9. Please use the dummy information below to login to the app for the first time, and then create your own user information:
     - Email: justinthelaw@yahoo.com
     - Password: galvanize
 
@@ -50,9 +50,9 @@ Launch Scheduler 9000 allows registered users to file, view, and approve schedul
 Future enhancements:
 - Only show current launch dates that haven't launched yet and the ability to archive past ones (10 year history of records)
 - Do verification of edited data - currently you can submit an edit with no changes which causes CC Approval => false
-- Add new permission levels for: new user registration, customer registration, etc.
+- Add new permission levels for: new user registration, customer registration, delete users, etc.
 - Make launch vehicles a select list based on up-to-date launch vehicle lists from customers
-- Register users from the login page
+- Register users from the login page and add 'help' contact info
 - Current state of project is 'useable', however it is limited and has not been deployed
 - App is only being maintained for this week 7/9/2021, until viability can be confirmed
 
