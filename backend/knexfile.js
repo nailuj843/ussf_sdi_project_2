@@ -5,7 +5,7 @@ const { CLIENT, DATABASE, PG_USER, PASSWORD, HOST, PG_PORT } = process.env
 module.exports = {
 
   development: {
-    client: 'pg',
+    client: `${CLIENT}`,
     connection: `postgres://${PG_USER}:${PASSWORD}@${HOST}:${PG_PORT}/${DATABASE}`
   },
 
@@ -13,7 +13,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {
@@ -29,7 +29,7 @@ module.exports = {
     client: 'postgresql',
     connection: {
       database: 'my_db',
-      user:     'username',
+      user: 'username',
       password: 'password'
     },
     pool: {
