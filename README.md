@@ -12,7 +12,7 @@
 Launch Scheduler 9000 allows registered users to file, view, and approve scheduled launches on a minimalistic dashboard.
 
 ## Description
-![Schema](./Description/SCHEMA.png)
+![Schema](./docs/SCHEMA.png)
 
 ## Installation
   1. Please modify the .env.example file, following the format commented within the .env.example file. Delete the comments and the .example extension of the .env file before running the application.
